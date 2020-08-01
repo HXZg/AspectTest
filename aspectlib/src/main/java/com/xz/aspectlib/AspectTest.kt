@@ -9,12 +9,12 @@ import com.xz.aspectlib.annotation.Permission
 import com.xz.aspectlib.intercept.InterceptExecutor
 import com.xz.aspectlib.intercept.InterceptUtils
 import com.xz.aspectlib.permission.PermissionUtils
+import com.xz.aspectlib.utils.ActivityTimeUtils
 import com.xz.aspectlib.utils.AppExecutor
 import org.aspectj.lang.ProceedingJoinPoint
-import org.aspectj.lang.annotation.Around
-import org.aspectj.lang.annotation.Aspect
-import org.aspectj.lang.annotation.Before
-import org.aspectj.lang.annotation.Pointcut
+import org.aspectj.lang.annotation.*
+import org.aspectj.lang.reflect.MethodSignature
+import java.lang.reflect.Method
 
 /**
  * @title com.xz.aspecttest  AspectTest
@@ -88,6 +88,54 @@ class AspectTest {
                 } else {
                     if (it == 1) PermissionUtils.exeFailMethod(any,requestCode) else PermissionUtils.exeCancelMethod(any,requestCode)
                 }
+            }
+        }
+    }
+
+    @Pointcut("execution(void com.xz.aspecttest.MainActivity.onCreate(android.os.Bundle))")
+    fun onCreate() {}
+
+    @Pointcut("execution(void com.xz.aspecttest.MainActivity.onDestroy())")
+    fun onDestroy() {}
+
+    @Before("onCreate()")
+    fun getTime() {
+        ActivityTimeUtils.onCreate()
+        Log.i("zzzzzzzzzzzz","onCreate")
+    }
+
+    @After("onDestroy()")
+    fun calculateActivityTime() {
+        val time = ActivityTimeUtils.onDestroy()
+        Log.i("zzzzzzzzzzz",time.toString())
+    }
+
+    private fun getMethodAnnotation(joinPoint: ProceedingJoinPoint) {
+        // 获取到执行的方法
+        val methodSignature = joinPoint.signature as MethodSignature
+        val method = methodSignature.method
+        // 获取到方法上的所有注解
+        val annotations = method.annotations
+
+        // 获取到 方法所有 属性的注解
+        getMethodParamByAnnotation(method)
+
+        annotations.forEach {
+            // 获取到 该注解上的注解
+            val annotation = it.javaClass.getAnnotation(Intercept::class.java)
+        }
+
+        // 获取到 该方法切入点的所有属性值
+        val args = joinPoint.args
+    }
+
+    private fun getMethodParamByAnnotation(method: Method) {
+        // 获取 方法所有属性的注解
+        val parameterAnnotations = method.parameterAnnotations
+        parameterAnnotations.forEachIndexed { index, arrayOfAnnotations ->
+            // 每个属性上的所有注解
+            arrayOfAnnotations.forEach {
+                // 判断是否为想要的注解
             }
         }
     }

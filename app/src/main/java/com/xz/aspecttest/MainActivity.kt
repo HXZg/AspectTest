@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import androidx.annotation.IntRange
+import androidx.annotation.IntegerRes
 import com.xz.aspectlib.annotation.*
 import com.xz.aspectlib.intercept.InterceptExecutor
 import com.xz.aspectlib.intercept.InterceptUtils
@@ -23,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         aop()
         sd()
         intercept()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     @IOThread(value = ThreadEnum.MAIN)
