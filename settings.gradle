@@ -1,3 +1,4 @@
 rootProject.name='AspectTest'
 include ':app'
 include ':aspectlib'
+include ':CustomPlugin'
