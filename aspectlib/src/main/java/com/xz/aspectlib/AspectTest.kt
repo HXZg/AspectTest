@@ -11,6 +11,7 @@ import com.xz.aspectlib.intercept.InterceptUtils
 import com.xz.aspectlib.permission.PermissionUtils
 import com.xz.aspectlib.utils.ActivityTimeUtils
 import com.xz.aspectlib.utils.AppExecutor
+import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.*
 import org.aspectj.lang.reflect.MethodSignature
@@ -92,22 +93,28 @@ class AspectTest {
         }
     }
 
-    @Pointcut("execution(void com.xz.aspecttest.MainActivity.onCreate(android.os.Bundle))")
+    // 同时会匹配父类的方法  指定android.app.Activity 也没用
+    @Pointcut("@target(com.xz.aspectlib.annotation.ActivityTime) && execution(void *.onCreate(android.os.Bundle))")
     fun onCreate() {}
 
-    @Pointcut("execution(void com.xz.aspecttest.MainActivity.onDestroy())")
+    @Pointcut("@target(com.xz.aspectlib.annotation.ActivityTime) && execution(void *.onDestroy())")
     fun onDestroy() {}
 
     @Before("onCreate()")
-    fun getTime() {
-        ActivityTimeUtils.onCreate()
-        Log.i("zzzzzzzzzzzz","onCreate")
+    fun getTime(joinPoint: JoinPoint) {
+        val name = joinPoint.`this`.toString()
+        ActivityTimeUtils.onCreate(name)
+        Log.i("zzzzzzzzzzzz","onCreate  $name")
     }
 
     @After("onDestroy()")
-    fun calculateActivityTime() {
-        val time = ActivityTimeUtils.onDestroy()
-        Log.i("zzzzzzzzzzz",time.toString())
+    fun calculateActivityTime(joinPoint: JoinPoint) {
+        val name = joinPoint.`this`.toString()
+        val time = ActivityTimeUtils.onDestroy(name)
+        if (time == 0L) {
+
+        }
+        Log.i("zzzzzzzzzzz","$time ,,,, $name")
     }
 
     private fun getMethodAnnotation(joinPoint: ProceedingJoinPoint) {

@@ -1,8 +1,10 @@
 package com.xz.aspecttest
 
 import android.Manifest
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.IntRange
@@ -12,6 +14,7 @@ import com.xz.aspectlib.intercept.InterceptExecutor
 import com.xz.aspectlib.intercept.InterceptUtils
 import com.xz.aspectlib.utils.ThreadEnum
 
+@ActivityTime
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +25,14 @@ class MainActivity : AppCompatActivity() {
                 return type == 1
             }
         })
-        aop()
-        sd()
-        intercept()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this,ThreeActivity::class.java))
+            finish()
+        },5000)
+//        aop()
+//        sd()
+//        intercept()
     }
 
     override fun onDestroy() {

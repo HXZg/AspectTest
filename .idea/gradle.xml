@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/CustomPlugin" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/aspectlib" />
+            <option value="$PROJECT_DIR$/plugintest" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

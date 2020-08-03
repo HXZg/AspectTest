@@ -10,6 +10,7 @@ import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 import javassist.ClassPool
 import javassist.CtClass
+import javassist.CtConstructor
 import org.gradle.api.Project
 
 class CustomTransform extends Transform {
@@ -52,6 +53,7 @@ class CustomTransform extends Transform {
         project.android.bootClasspath.each {
             pool.appendClassPath(it.absolutePath)
         }
+        println("huaixz,,,,,,,,,,,,,,,,,,,,,,,,,,,")
         transformInvocation.inputs.each {
             it.jarInputs.each {
                 pool.insertClassPath(it.file.absolutePath)
@@ -61,6 +63,7 @@ class CustomTransform extends Transform {
             }
 
             it.directoryInputs.each {
+                println("${it.file.absolutePath}")
                 // 获取到 整个文件的目录
                 def preName = it.file.absolutePath
                 pool.insertClassPath(preName)
@@ -100,12 +103,12 @@ class CustomTransform extends Transform {
         def name = className.replace(SdkConstants.DOT_CLASS,"").substring(1)
         println("huaixz::::$name")
         CtClass ctClass = pool.get(name)  // 从 池中获取到对应的类
-        if (name.contains("com.xz.aspecttest")) {
+        if (name.contains("com.xz.plugintest")) {
             // 再 这个包名 下的文件 才进行处理
-            def code = "Log,i(\"huaixz\",\"zzzzzzzzzzzzzzzzzzzzzzzz\")"
-            println("11111")
+            def code = "android.util.Log.i(\"huaixz\",\"zzzzzzzzzzzzzzzzzzzzzzzz\");"
             addCode(ctClass,code,fileName)
         }
+        ctClass.detach()
     }
 
     private void addCode(CtClass ctClass,String code,String fileName) {
@@ -114,6 +117,5 @@ class CustomTransform extends Transform {
             it.insertBefore(code)
         }
         ctClass.writeFile(fileName)
-        ctClass.detach()
     }
 }

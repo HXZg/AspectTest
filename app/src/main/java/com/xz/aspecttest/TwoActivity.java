@@ -1,6 +1,8 @@
 package com.xz.aspecttest;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,11 @@ public class TwoActivity extends AppCompatActivity {
     }
 
     public void aop() {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(TwoActivity.this,ThreeActivity.class));
+            }
+        },5000);
     }
 }
