@@ -1,11 +1,22 @@
 package com.xz.aspecttest;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.xz.aspecttest.navigator.KeepStateNavigator;
 
 /**
  * @author xian_zhong  admin
@@ -16,19 +27,33 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class TwoActivity extends AppCompatActivity {
 
+    private NavController navController;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        aop();
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController.getNavigatorProvider().addNavigator(new KeepStateNavigator(this,navHostFragment.getChildFragmentManager(),R.id.nav_host_fragment));
+        navController.setGraph(R.navigation.nav_graph);
+
+        BottomNavigationView bottomView = findViewById(R.id.bottom_view);
+        NavigationUI.setupWithNavController(bottomView,navController);
+
+        /*bottomView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Bundle bundle = new Bundle();
+                bundle.putString("name","bundle");
+                if (menuItem.getItemId() == R.id.BFragment) {
+//                    navController.navigate(Uri.parse("http://www.test.com/MAX"));
+                    navController.navigate(R.id.action_to_cfragment,bundle);
+                }
+                return true;
+            }
+        });*/
     }
 
-    public void aop() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(TwoActivity.this,ThreeActivity.class));
-            }
-        },5000);
-    }
+
 }

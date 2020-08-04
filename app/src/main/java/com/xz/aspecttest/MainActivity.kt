@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.IntRange
 import androidx.annotation.IntegerRes
+import androidx.navigation.Navigation
 import com.xz.aspectlib.annotation.*
 import com.xz.aspectlib.intercept.InterceptExecutor
 import com.xz.aspectlib.intercept.InterceptUtils
@@ -19,17 +20,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        InterceptUtils.setIntercept(object : InterceptExecutor {
-            override fun intercept(type: Int): Boolean {
-                return type == 1
-            }
-        })
+        setContentView(R.layout.activity_main_nav)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this,ThreeActivity::class.java))
-            finish()
-        },5000)
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+
 //        aop()
 //        sd()
 //        intercept()

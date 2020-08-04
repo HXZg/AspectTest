@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/AFragment"
+    tools:ignore="UnusedNavigation">
+
+    <action android:id="@+id/action_to_cfragment"
+        app:destination="@id/CFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"/>
+    <action android:id="@+id/action_to_afragment"
+        app:destination="@id/AFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"/>
+    <action android:id="@+id/action_to_bfragment"
+        app:destination="@id/BFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"/>
+    <action android:id="@+id/action_to_dfragment"
+        app:destination="@id/DFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"/>
+    <action android:id="@+id/action_to_efragment"
+        app:destination="@id/EFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"/>
+    <action android:id="@+id/action_to_ffragment"
+        app:destination="@id/FFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"/>
+    <keep_state_fragment
+        android:id="@+id/AFragment"
+        android:name="com.xz.aspecttest.AFragment"
+        android:label="fragment_a"
+        tools:layout="@layout/fragment_a" />
+    <keep_state_fragment
+        android:id="@+id/BFragment"
+        android:name="com.xz.aspecttest.BFragment"
+        android:label="fragment_b"
+        tools:layout="@layout/fragment_b" />
+    <keep_state_fragment android:id="@+id/CFragment"
+        android:name="com.xz.aspecttest.CFragment"
+        android:label="fragment_c"
+        tools:layout="@layout/fragment_c">
+        <argument android:name="name" android:defaultValue="default"/>
+        <deepLink app:uri="www.test.com/{name}"/>
+    </keep_state_fragment>
+    <keep_state_fragment android:id="@+id/DFragment"
+        android:name="com.xz.aspecttest.DFragment"
+        android:label="fragment_cd"
+        tools:layout="@layout/fragment_d"/>
+    <keep_state_fragment android:id="@+id/EFragment"
+        android:name="com.xz.aspecttest.EFragment"
+        android:label="fragment_e"
+        tools:layout="@layout/fragment_e"/>
+    <keep_state_fragment android:id="@+id/FFragment"
+        android:name="com.xz.aspecttest.FFragment"
+        android:label="fragment_e"
+        tools:layout="@layout/fragment_e"/>
+</navigation>
