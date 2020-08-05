@@ -1,10 +1,16 @@
 package com.xz.aspecttest;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ioclib.InjectUtils;
+import com.example.ioclib.annotation.ContentView;
+import com.example.ioclib.annotation.OnClick;
+import com.example.ioclib.annotation.ViewInject;
 import com.xz.aspectlib.annotation.ActivityTime;
 
 /**
@@ -14,12 +20,20 @@ import com.xz.aspectlib.annotation.ActivityTime;
  * @Des ThreeActivity
  * @DATE 2020/8/3  8:59 星期一
  */
-@ActivityTime
+@ContentView(R.layout.activity_three)
 public class ThreeActivity extends AppCompatActivity {
+
+    @ViewInject(R.id.tv_three)
+    TextView textView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        InjectUtils.INSTANCE.inject(this);
+    }
+
+    @OnClick(R.id.btn_three)
+    public void onClick(View view) {
+        textView.setText("btn");
     }
 }

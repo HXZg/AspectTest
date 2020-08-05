@@ -9,7 +9,9 @@ import java.lang.reflect.Proxy
 object InjectUtils {
 
     fun inject(context: Any) {
-
+        injectLayout(context)
+        injectView(context)
+        injectClick(context)
     }
 
     private fun injectLayout(context: Any) {
