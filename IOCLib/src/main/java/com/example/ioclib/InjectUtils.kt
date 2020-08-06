@@ -1,6 +1,8 @@
 package com.example.ioclib
 
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.example.ioclib.annotation.ContentView
 import com.example.ioclib.annotation.EventBus
 import com.example.ioclib.annotation.ViewInject
@@ -40,24 +42,67 @@ object InjectUtils {
         val javaClass = context.javaClass
         javaClass.declaredMethods.forEach {method ->
             method.annotations.forEach {
-                val eventBus = it.javaClass.getAnnotation(EventBus::class.java)
+                val eventBus = it.annotationClass.java.getAnnotation(EventBus::class.java)
                 if (eventBus != null) {
                     val listenerSetter = eventBus.listenerSetter
                     val listenerClazz = eventBus.listenerType.java
                     val methodName = eventBus.methodName
 
-                    val value = it.javaClass.getDeclaredField("value")
-                    val viewId = value.get(it) as IntArray
+                    val value = it.annotationClass.java.getDeclaredMethod("value")
+                    val viewId = value.invoke(it) as IntArray
+                    Log.i("zzzzzzzzzzzzzzz","${viewId.size}")
                     viewId.forEach { id ->
                         val findViewById = javaClass.getMethod("findViewById", Int::class.java)
-                        val view = findViewById.invoke(context, value) as View
+                        val view = findViewById.invoke(context, id) as View
 
                         val listener = Proxy.newProxyInstance(listenerClazz.classLoader,
-                            Array(1){listenerClazz},ListenerInvokeHandler(context,method))
+                            Array(1){listenerClazz},ListenerInvocationHandler(context,method))
 
-                        val declaredMethod =
-                            view.javaClass.getDeclaredMethod(listenerSetter, listenerClazz)
-                        declaredMethod.invoke(view,listener)
+                        Log.i("zzzzzzzzzz","$view ,,, $listenerSetter ,,, $listenerClazz")
+                        val setListener = view.javaClass.getMethod(listenerSetter, listenerClazz)
+                        setListener.invoke(view,listener)
+                    }
+
+                }
+            }
+        }
+    }
+
+    fun inject(fragment: Fragment) {
+        fragment.javaClass.declaredFields.forEach {
+            val views = it.getAnnotation(ViewInject::class.java)
+            if (views != null) {
+                val id = views.value
+                val declaredMethod =
+                    fragment.view?.javaClass?.getDeclaredMethod("findViewById", Int::class.java)
+                val view = declaredMethod?.invoke(fragment.view, id)
+                it.isAccessible = true
+                it.set(fragment,view)
+            }
+        }
+        val javaClass = fragment.javaClass
+        javaClass.declaredMethods.forEach {method ->
+            method.annotations.forEach {
+                val eventBus = it.annotationClass.java.getAnnotation(EventBus::class.java)
+                if (eventBus != null) {
+                    val listenerSetter = eventBus.listenerSetter
+                    val listenerClazz = eventBus.listenerType.java
+                    val methodName = eventBus.methodName
+
+                    val value = it.annotationClass.java.getDeclaredMethod("value")
+                    val viewId = value.invoke(it) as IntArray
+                    Log.i("zzzzzzzzzzzzzzz","${viewId.size}")
+                    viewId.forEach { id ->
+                        val fv = fragment.view?.javaClass
+                        val findViewById = fv?.getMethod("findViewById", Int::class.java)
+                        val view = findViewById?.invoke(fragment.view, id) as View
+
+                        val listener = Proxy.newProxyInstance(listenerClazz.classLoader,
+                            Array(1){listenerClazz},ListenerInvocationHandler(fragment,method))
+
+                        Log.i("zzzzzzzzzz","$view ,,, $listenerSetter ,,, $listenerClazz")
+                        val setListener = view.javaClass.getMethod(listenerSetter, listenerClazz)
+                        setListener.invoke(view,listener)
                     }
 
                 }

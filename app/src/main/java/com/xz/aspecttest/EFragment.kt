@@ -28,7 +28,7 @@ class EFragment : Fragment() {
             if (activity is MainActivity) {
 //                Navigation.findNavController(view).navigate(R.id.action_to_efragment)
             } else {
-                startActivity(Intent(context,ThreeActivity::class.java))
+                startActivity(Intent(context,TestThreeActivity::class.java))
             }
         }
     }

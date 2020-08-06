@@ -11,7 +11,6 @@ import com.example.ioclib.InjectUtils;
 import com.example.ioclib.annotation.ContentView;
 import com.example.ioclib.annotation.OnClick;
 import com.example.ioclib.annotation.ViewInject;
-import com.xz.aspectlib.annotation.ActivityTime;
 
 /**
  * @author xian_zhong  admin
