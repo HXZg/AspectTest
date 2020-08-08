@@ -24,6 +24,6 @@ class DFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_fragment.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_to_efragment) }
+        btn_fragment.setOnClickListener { Navigation.findNavController(view).navigate(R.id.EFragment) }
     }
 }

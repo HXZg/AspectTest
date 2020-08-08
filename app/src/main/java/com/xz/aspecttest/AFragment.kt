@@ -6,7 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.fragment.app.findFragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_a.*
 
@@ -26,6 +27,11 @@ class AFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val controller = findNavController().graph
+        val host = childFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        val hostController = nav_host_fragment.findNavController().graph
+        Log.i("zzzzzzzzzzz","$controller   ,,,  $hostController  ,, ${host?.findNavController()}")
     }
 
     override fun onHiddenChanged(hidden: Boolean) {

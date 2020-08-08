@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,6 +18,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.xz.aspecttest.navigator.KeepStateNavigator;
+
+import java.util.logging.Logger;
 
 /**
  * @author xian_zhong  admin
@@ -37,6 +40,8 @@ public class TwoActivity extends AppCompatActivity {
         Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController.getNavigatorProvider().addNavigator(new KeepStateNavigator(this,navHostFragment.getChildFragmentManager(),R.id.nav_host_fragment));
         navController.setGraph(R.navigation.nav_graph);
+
+        Log.i("zzzzzzzz","" + navHostFragment.toString() + "   " + navController);
 
         BottomNavigationView bottomView = findViewById(R.id.bottom_view);
         NavigationUI.setupWithNavController(bottomView,navController);

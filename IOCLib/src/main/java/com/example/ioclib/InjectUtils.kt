@@ -98,7 +98,7 @@ object InjectUtils {
                         val view = findViewById?.invoke(fragment.view, id) as View
 
                         val listener = Proxy.newProxyInstance(listenerClazz.classLoader,
-                            Array(1){listenerClazz},ListenerInvocationHandler(fragment,method))
+                            Array(1){listenerClazz},ListenerInvokeHandler(fragment,method))
 
                         Log.i("zzzzzzzzzz","$view ,,, $listenerSetter ,,, $listenerClazz")
                         val setListener = view.javaClass.getMethod(listenerSetter, listenerClazz)

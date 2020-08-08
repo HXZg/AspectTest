@@ -50,7 +50,7 @@
     <keep_state_fragment android:id="@+id/DFragment"
         android:name="com.xz.aspecttest.DFragment"
         android:label="fragment_cd"
-        tools:layout="@layout/fragment_d"/>
+        android:layout="@layout/fragment_d"/>
     <keep_state_fragment android:id="@+id/EFragment"
         android:name="com.xz.aspecttest.EFragment"
         android:label="fragment_e"
@@ -59,4 +59,14 @@
         android:name="com.xz.aspecttest.FFragment"
         android:label="fragment_e"
         tools:layout="@layout/fragment_e"/>
+    <activity
+        android:id="@+id/main_activity"
+        android:name="com.xz.aspecttest.ThreeActivity"
+        />
+
+    <fragment
+        android:id="@+id/test"
+        android:name="com.xz.aspecttest.CFragment"
+        tools:layout="@layout/fragment_c"
+        />
 </navigation>
