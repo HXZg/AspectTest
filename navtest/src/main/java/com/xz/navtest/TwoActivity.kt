@@ -11,7 +11,7 @@ import com.xz.lib.ActivityDestination
  * @Des TwoActivity
  * @DATE 2020/8/8  10:55 星期六
  */
-@ActivityDestination(id = R.id.two_activity,control = "home")
+@ActivityDestination(id = 23,control = "home")
 class TwoActivity :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

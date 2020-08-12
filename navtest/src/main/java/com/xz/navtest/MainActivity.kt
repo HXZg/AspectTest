@@ -1,5 +1,6 @@
 package com.xz.navtest
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(bottom_view,navController)
         bottom_view.setOnNavigationItemSelectedListener {
-            navController.navigate(R.id.two_activity)
+            navController.navigate(23)
 //            navController.navigate(it.itemId)
 //            NavigationUI.onNavDestinationSelected(it,navController)  // 里面会携带 popId 参数 导致 fragment 出栈  界面显示重叠
             return@setOnNavigationItemSelectedListener false
