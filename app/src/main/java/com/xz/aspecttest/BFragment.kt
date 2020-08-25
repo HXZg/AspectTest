@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.work.WorkManager
+import com.xz.aspecttest.workmanager.MyWorker
+import com.xz.aspecttest.workmanager.WorkManagerExecut
 import kotlinx.android.synthetic.main.fragment_b.*
 
 class BFragment : Fragment() {
@@ -22,6 +26,12 @@ class BFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_fragment.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_to_cfragment) }
+
+        val queueWork = WorkManagerExecut.queueWork<MyWorker>(requireContext())
+        WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(queueWork)
+            .observe(viewLifecycleOwner, Observer {
+                Log.i("zzzzzzzzzzzzz","${it.state}  ${it.progress}  ${it.id}")
+            })
     }
 
     override fun onHiddenChanged(hidden: Boolean) {

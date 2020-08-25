@@ -11,8 +11,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/CustomPlugin" />
+            <option value="$PROJECT_DIR$/IOCLib" />
+            <option value="$PROJECT_DIR$/annotation" />
+            <option value="$PROJECT_DIR$/annotation_compile" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/aspectlib" />
+            <option value="$PROJECT_DIR$/navtest" />
             <option value="$PROJECT_DIR$/plugintest" />
           </set>
         </option>

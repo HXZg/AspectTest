@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import com.xz.aspecttest.view.QQBubbleView
 import kotlinx.android.synthetic.main.fragment_d.*
+import q.rorbin.badgeview.QBadgeView
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +26,13 @@ class DFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_fragment.setOnClickListener { Navigation.findNavController(view).navigate(R.id.EFragment) }
+        btn_fragment.setOnClickListener {
+        }
+
+        val badge = QBadgeView(requireContext()).bindTarget(btn_fragment).setBadgeNumber(5)
+
+        badge.setOnDragStateChangedListener { dragState, badge, targetView ->
+
+        }
     }
 }

@@ -151,7 +151,7 @@ class QQBubbleView @JvmOverloads constructor(context: Context,attributeSet: Attr
                 }
             }
             MotionEvent.ACTION_MOVE -> {
-                if (bubbleState != BUBBLE_CONNECT) return true
+                if (bubbleState == BUBBLE_DEFAULT || bubbleState == BUBBLE_DISMISS) return true
                 mBubbleMovedCenter.x = event.x
                 mBubbleMovedCenter.y = event.y
 
@@ -183,7 +183,7 @@ class QQBubbleView @JvmOverloads constructor(context: Context,attributeSet: Attr
                 }
             }
         }
-        return true
+        return bubbleState != BUBBLE_DEFAULT && bubbleState != BUBBLE_DISMISS
     }
     
     private fun startBubbleRestAnim() {
@@ -206,5 +206,19 @@ class QQBubbleView @JvmOverloads constructor(context: Context,attributeSet: Attr
         // 爆炸动画
         bubbleState = BUBBLE_DISMISS
         invalidate()
+    }
+
+    fun defaultInvalidate() {
+        bubbleState = BUBBLE_DEFAULT
+        mBubbleMovedCenter.set(mBubbleStillCenter.x,mBubbleStillCenter.y)
+        invalidate()
+    }
+
+    fun archor(view: View,gravity: Int = 0) {
+        view.post {
+            mBubbleStillCenter.set(view.x,view.y)
+            mBubbleMovedCenter.set(view.x,view.y)
+            defaultInvalidate()
+        }
     }
 }
