@@ -3,6 +3,7 @@ package com.xz.navtest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.xz.lib.ActivityDestination
+import com.xz.skinmanager.BaseActivity
 
 /**
  * @title com.xz.navtest  AspectTest
@@ -12,7 +13,7 @@ import com.xz.lib.ActivityDestination
  * @DATE 2020/8/8  10:55 星期六
  */
 @ActivityDestination(id = 23,control = "home")
-class TwoActivity :AppCompatActivity() {
+class TwoActivity :BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

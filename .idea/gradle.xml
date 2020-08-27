@@ -18,6 +18,8 @@
             <option value="$PROJECT_DIR$/aspectlib" />
             <option value="$PROJECT_DIR$/navtest" />
             <option value="$PROJECT_DIR$/plugintest" />
+            <option value="$PROJECT_DIR$/skin" />
+            <option value="$PROJECT_DIR$/skinmanager" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

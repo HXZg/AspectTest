@@ -1,19 +1,27 @@
 package com.xz.navtest
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import android.os.Environment
+import android.util.AttributeSet
 import android.util.Log
-import androidx.core.view.forEach
+import android.widget.LinearLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.xz.navtest.utils.NavGraphBuilder
+import com.xz.skinmanager.BaseActivity
+import com.xz.skinmanager.SkinManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
+        SkinManager.initContext(this)
+        val path = externalCacheDir?.absolutePath + "/skin.apk"
+        SkinManager.loadPath(path)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

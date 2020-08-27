@@ -19,15 +19,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        new Test().test();
-
-        try {
-            InputStream open = getAssets().open("destination.json");
-            Log.i("zzzzzzzzzzz","" + open);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }
