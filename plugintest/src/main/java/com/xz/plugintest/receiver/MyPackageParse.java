@@ -18,6 +18,8 @@ import dalvik.system.DexClassLoader;
  * @title com.xz.plugintest.receiver  AspectTest
  * @Des MyPackageParse
  * @DATE 2020/8/28  9:27 星期五
+ *
+ * 通过 PMS  解析 apk 中的 AndroidManifest  动态注册插件中的 广播
  */
 public class MyPackageParse {
 
