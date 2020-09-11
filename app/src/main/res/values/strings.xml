@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AspectTest</string>
+
+    <string name="hello_blank_fragment">Hello A fragment</string>
+    <string name="hello_b_fragment">Hello B fragment</string>
+    <string name="hello_c_fragment">Hello C fragment</string>
+    <string name="hello_d_fragment">Hello D fragment</string>
+    <string name="hello_e_fragment">Hello E fragment</string>
+</resources>
