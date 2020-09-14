@@ -1,5 +1,6 @@
 package com.xz.aspecttest
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -27,11 +28,16 @@ class BFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         btn_fragment.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_to_cfragment) }
 
-        val queueWork = WorkManagerExecut.queueWork<MyWorker>(requireContext())
+        /*val queueWork = WorkManagerExecut.queueWork<MyWorker>(requireContext())
         WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(queueWork)
             .observe(viewLifecycleOwner, Observer {
                 Log.i("zzzzzzzzzzzzz","${it.state}  ${it.progress}  ${it.id}")
-            })
+            })*/
+
+        val inputStream = context?.assets?.open("newtest.png")
+//        val bitmap = BitmapFactory.decodeStream(inputStream)
+//        bv_big.setImageBitmap(bitmap)
+        bv_big.setImage(inputStream)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {

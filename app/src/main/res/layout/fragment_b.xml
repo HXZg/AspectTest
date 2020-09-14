@@ -9,7 +9,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_b_fragment" />
+        android:text="@string/hello_b_fragment"
+        android:visibility="gone"/>
+
+    <com.xz.aspecttest.view.BigView
+        android:id="@+id/bv_big"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <Button
         android:id="@+id/btn_fragment"
@@ -17,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="20dp"
+        android:visibility="gone"
         android:text="to_fragment"/>
 
 </FrameLayout>
