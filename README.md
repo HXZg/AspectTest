@@ -77,12 +77,15 @@ implementation 'org.aspectj:aspectjrt:1.8.14'
 
 ##### app 模块
 仿QQ的气泡view 自定义实现
+大图加载
 navigation hide show方式替换fragment 实现
 workmanager 测试
 
+[协程记录以及测试](https://github.com/clickListenerData/AspectTest/tree/master/coroutinestest)
+
 ##### mmapfile 模块
 sharedPreferences 与 mmkv 测试  [demo](https://github.com/clickListenerData/AspectTest/tree/master/plugintest)
-c++ 实现 mmap函数  做到内存与文件的映射，无需拷贝，内核控件切换。
+c++ 实现 mmap函数  做到内存与文件的映射，无需拷贝，内核空间切换。
 okhttp 实现websocket 长链接。
 实现断点下载，断点上传。
 SSL证书信任验证
