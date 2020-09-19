@@ -7,6 +7,8 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +23,12 @@ import com.xz.mmapfile.ws.UploadChunkTask;
 import com.xz.mmapfile.ws.UploadTask;
 import com.xz.mmapfile.ws.UserWeb;
 
+import java.io.File;
 import java.io.IOException;
+
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        utils.write();
 
-        userWeb = new UserWeb();
+//        userWeb = new UserWeb();
 
         /*try {
             userWeb.connect(getAssets().open("hxz.cer"));
@@ -92,8 +99,39 @@ public class MainActivity extends AppCompatActivity {
             Log.i("zzzzzzzzzzzz",path + ":::" + scheme);
 
             if (!TextUtils.isEmpty(path)) {
-                new UploadChunkTask().execute(path);
+//                new UploadChunkTask().execute(path);
 //                userWeb.uploadFile(path);
+
+                // huffman
+//                Bitmap bitmap = BitmapFactory.decodeFile(path);
+//                new MmapFileUtils().compress(bitmap,getExternalCacheDir().getAbsolutePath() + "/test.png");
+
+                Luban.with(this)
+                        .load(path)
+                        .ignoreBy(100)
+                        .setTargetDir(getExternalCacheDir().getAbsolutePath())
+                        .filter(new CompressionPredicate() {
+                            @Override
+                            public boolean apply(String path) {
+                                return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                            }
+                        })
+                        .setCompressListener(new OnCompressListener() {
+                            @Override
+                            public void onStart() {
+                                // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                            }
+
+                            @Override
+                            public void onSuccess(File file) {
+                                // TODO 压缩成功后调用，返回压缩后的图片文件
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                // TODO 当压缩过程出现问题时调用
+                            }
+                        }).launch();
             }
         }
     }

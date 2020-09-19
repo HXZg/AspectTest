@@ -1,5 +1,7 @@
 package com.xz.mmapfile;
 
+import android.graphics.Bitmap;
+
 /**
  * @author xian_zhong  admin
  * @version 1.0
@@ -10,6 +12,7 @@ package com.xz.mmapfile;
 public class MmapFileUtils {
 
     static {
+        System.loadLibrary("jpegbither");
         System.loadLibrary("native_mmap");
     }
 
@@ -17,4 +20,6 @@ public class MmapFileUtils {
      *   往  "/data/data/com.xz.mmapfile/cache/test.txt"  目录下  写文件 test.txt  内容：fagasghh
      */
     public native void write();
+
+    public native void compress(Bitmap bitmap,String path);
 }
