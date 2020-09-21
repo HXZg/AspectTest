@@ -34,7 +34,7 @@ class BFragment : Fragment() {
                 Log.i("zzzzzzzzzzzzz","${it.state}  ${it.progress}  ${it.id}")
             })*/
 
-        val inputStream = context?.assets?.open("newtest.png")
+        val inputStream = context?.assets?.open("test.jpg")
 //        val bitmap = BitmapFactory.decodeStream(inputStream)
 //        bv_big.setImageBitmap(bitmap)
         bv_big.setImage(inputStream)

@@ -221,13 +221,13 @@ public class BigView extends View implements View.OnTouchListener,
         } else {
             mScale = originalScale;
         }
-        int centerX = (int) motionEvent.getX();
-        int centerY = (int) motionEvent.getY();
+        float centerX = motionEvent.getX();
+        float centerY = motionEvent.getY();
         int width = (int)(mViewWidth / mScale);
         int height = (int)(mViewHeight / mScale);
 
-//        mRect.left += (centerX - mViewWidth / 2);
-//        mRect.top = centerY - height;
+//        mRect.left += ((centerX - mViewWidth / 2) / mScale);
+//        mRect.top += ((centerY - mViewHeight / 2) / mScale);
         mRect.right = mRect.left + width;
         mRect.bottom = mRect.top + height;
 
