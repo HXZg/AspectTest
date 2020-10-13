@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.xz.aspectlib.annotation.*
 import com.xz.aspectlib.utils.ThreadEnum

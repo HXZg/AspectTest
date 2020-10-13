@@ -10,14 +10,18 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ArrayListLib" />
             <option value="$PROJECT_DIR$/CustomPlugin" />
             <option value="$PROJECT_DIR$/IOCLib" />
             <option value="$PROJECT_DIR$/annotation" />
             <option value="$PROJECT_DIR$/annotation_compile" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/aspectlib" />
+            <option value="$PROJECT_DIR$/coroutinestest" />
+            <option value="$PROJECT_DIR$/mmapfile" />
             <option value="$PROJECT_DIR$/navtest" />
             <option value="$PROJECT_DIR$/plugintest" />
+            <option value="$PROJECT_DIR$/qrcodedemo" />
             <option value="$PROJECT_DIR$/skin" />
             <option value="$PROJECT_DIR$/skinmanager" />
           </set>

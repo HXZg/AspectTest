@@ -1,5 +1,6 @@
 package com.xz.mmapfile;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,14 +19,33 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.target.ViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.xz.mmapfile.ws.UploadChunkTask;
 import com.xz.mmapfile.ws.UploadTask;
 import com.xz.mmapfile.ws.UserWeb;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.concurrent.ExecutionException;
 
 import top.zibin.luban.CompressionPredicate;
 import top.zibin.luban.Luban;
@@ -51,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }*/
 
+//        getSupportFragmentManager().beginTransaction().add()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
@@ -67,12 +90,82 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent,"select file"),0);
 
 //        userWeb.downloadFile();
-//        ImageView iv = findViewById(R.id.iv_pic);
-//
-//        Glide.with(this).load("http://192.168.3.124:1111/fileDir/test.jpg").into(iv);
+        ImageView iv = findViewById(R.id.iv_pic);
+
+        RequestManager manager = Glide.with(this);  // 加入fragment 中 的 manager
+        RequestBuilder<Drawable> builder = manager.asDrawable();  // 构建一个请求build
+        RequestBuilder<Drawable> load = builder.load("");  // 设置 model 参数
+        ViewTarget<ImageView, Drawable> into = load.into(iv);
+
+//        RoundedCorners
+//        Glide.with(this).load("").into(iv);
+        // 请求发送到哪去了  怎么被维护的  怎么被处理的
+        RequestOptions options = RequestOptions.circleCropTransform()
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .skipMemoryCache(true)
+                .centerCrop()
+                .override(100,100)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with(this)
+//                .applyDefaultRequestOptions(options)
+                .asBitmap()  // 转bitmap 存储显
+                .load("http://192.168.3.124:1111/fileDir/test.jpg")  // 设置url
+//                .dontTransform()  // 取消图片变换
+//                .centerCrop()
+//                .fitCenter()
+//                .transform(new CircleCrop())  // 添加图片变换
+//                .placeholder(R.drawable.ic_launcher_background)  // 设置占位图片
+//                .error(R.drawable.ic_launcher_background)  // 设置 错误图片
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)  // 设置磁盘缓存策略为不缓存  默认为缓存转换过后的图片
+//                .override(100,100) // 设置图片大小  默认用imageView 的 宽高
+//                .skipMemoryCache(true)  // 跳过内存缓存
+//                .apply(options)
+//                .format(DecodeFormat.PREFER_ARGB_8888)
+//                .into(iv);
+                .listener(new RequestListener<Bitmap>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                        // 加载失败  返回false 事件没有被处理，继续向下传递
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .preload();  // 预加载 缓存图片  内部维护一个空target实现
+
+
+        FutureTarget<File> submit = Glide.with(this).download("").submit();// 仅下载图片
+        FutureTarget<File> target = Glide.with(this.getApplicationContext()).load("")
+                .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);  // 仅下载图片
+        try {
+            File file = target.get();  // 阻塞线程
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    @Override
+    private SimpleTarget target = new SimpleTarget<Drawable>() {
+        @Override
+        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition transition) {
+
+        }
+    };
+
+    private ViewTarget viewTarget = new ViewTarget<LinearLayout,Drawable>(new LinearLayout(this)) {
+        @Override
+        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition transition) {
+
+        }
+    };
+
+        @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK && data != null) {
@@ -185,9 +278,9 @@ public class MainActivity extends AppCompatActivity {
             String album=cursor.getString(cursor.getColumnIndex(_album));
             Log.d("onActivityResult","path:" + path + "," + album);
 
+            cursor.close();
             return path;
         }
-        cursor.close();
         return null;
     }
 }

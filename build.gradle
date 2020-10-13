@@ -19,6 +19,7 @@ buildscript {
         /*classpath 'org.aspectj:aspectjweaver:1.9.6'
         classpath 'org.aspectj:aspectjtools:1.9.6'*/
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.4'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
 //        classpath 'com.example.customplugin:custom:1.0.1'
     }
 }
