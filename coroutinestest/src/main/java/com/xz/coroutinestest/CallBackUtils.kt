@@ -1,7 +1,6 @@
 package com.xz.coroutinestest
 
 import kotlinx.coroutines.*
-import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine

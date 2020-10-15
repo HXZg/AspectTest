@@ -21,3 +21,18 @@ class CallUtils<T> {
         callback.onFail(IllegalStateException())
     }
 }
+
+class A{
+
+}
+
+val s: A
+get() {
+    return A()
+}
+
+val s1 = "abcd"
+
+fun main(args: Array<String>) {
+    println("args = [${s == s}]")
+}

@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

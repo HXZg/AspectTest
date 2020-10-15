@@ -2,7 +2,9 @@ package com.xz.mmapfile;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -44,8 +46,12 @@ import com.xz.mmapfile.ws.UserWeb;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import top.zibin.luban.CompressionPredicate;
 import top.zibin.luban.Luban;
@@ -74,43 +80,45 @@ public class MainActivity extends AppCompatActivity {
 
 //        getSupportFragmentManager().beginTransaction().add()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
-        }
+        }*/
 //
 //        web.connect();
     }
 
 
     public void open(View view) {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(Intent.createChooser(intent,"select file"),0);
-
-//        userWeb.downloadFile();
-        ImageView iv = findViewById(R.id.iv_pic);
-
-        RequestManager manager = Glide.with(this);  // 加入fragment 中 的 manager
-        RequestBuilder<Drawable> builder = manager.asDrawable();  // 构建一个请求build
-        RequestBuilder<Drawable> load = builder.load("");  // 设置 model 参数
-        ViewTarget<ImageView, Drawable> into = load.into(iv);
-
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("*/*");
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        startActivityForResult(Intent.createChooser(intent,"select file"),0);
+//
+////        userWeb.downloadFile();
+//        ImageView iv = findViewById(R.id.iv_pic);
+//
+//        Glide.with(this).load("").into(iv);
+//
+//        RequestManager manager = Glide.with(this);  // 加入fragment 中 的 manager
+//        RequestBuilder<Drawable> builder = manager.asDrawable();  // 构建一个请求build
+//        RequestBuilder<Drawable> load = builder.load("");  // 设置 model 参数
+//        ViewTarget<ImageView, Drawable> into = load.into(iv);
 //        RoundedCorners
 //        Glide.with(this).load("").into(iv);
+        // MVC MVP 接口回调 MVVM
         // 请求发送到哪去了  怎么被维护的  怎么被处理的
-        RequestOptions options = RequestOptions.circleCropTransform()
+        /*RequestOptions options = RequestOptions.circleCropTransform()
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .skipMemoryCache(true)
                 .centerCrop()
                 .override(100,100)
-                .diskCacheStrategy(DiskCacheStrategy.NONE);
-        Glide.with(this)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);*/
+//        Glide.with(this)  // 支持gif
 //                .applyDefaultRequestOptions(options)
-                .asBitmap()  // 转bitmap 存储显
-                .load("http://192.168.3.124:1111/fileDir/test.jpg")  // 设置url
+//                .asBitmap()  // 转bitmap 存储显
+//                .load("http://192.168.3.124:1111/fileDir/test.jpg")  // 设置url
 //                .dontTransform()  // 取消图片变换
 //                .centerCrop()
 //                .fitCenter()
@@ -123,35 +131,61 @@ public class MainActivity extends AppCompatActivity {
 //                .apply(options)
 //                .format(DecodeFormat.PREFER_ARGB_8888)
 //                .into(iv);
-                .listener(new RequestListener<Bitmap>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                        // 加载失败  返回false 事件没有被处理，继续向下传递
-                        return false;
-                    }
+//                .listener(new RequestListener<Bitmap>() {
+//                    @Override
+//                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+//                        // 加载失败  返回false 事件没有被处理，继续向下传递
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+//                        return false;
+//                    }
+//                })
+//                .preload();  // 预加载 缓存图片  内部维护一个空target实现
 
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .preload();  // 预加载 缓存图片  内部维护一个空target实现
 
+//        FutureTarget<File> submit = Glide.with(this).download("").submit();// 仅下载图片
+//        FutureTarget<File> target = Glide.with(this.getApplicationContext()).load("")
+//                .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);  // 仅下载图片
+//        try {
+//            File file = target.get();  // 阻塞线程
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
-        FutureTarget<File> submit = Glide.with(this).download("").submit();// 仅下载图片
-        FutureTarget<File> target = Glide.with(this.getApplicationContext()).load("")
-                .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);  // 仅下载图片
-        try {
-            File file = target.get();  // 阻塞线程
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+// 加固
+        new AlertDialog.Builder(this).setTitle("111").setMessage("2222").show();
     }
 
-    private SimpleTarget target = new SimpleTarget<Drawable>() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("zzzzzzzzzzzzzzzzzzzz","on resume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("zzzzzzzzzzzzzzzzzzzz","on pause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("zzzzzzzzzzzzzzzzzzzz","on stop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("zzzzzzzzzzzzzzzzzzzz","on destroy");
+    }
+
+    /*private SimpleTarget target = new SimpleTarget<Drawable>() {
         @Override
         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition transition) {
 
@@ -163,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition transition) {
 
         }
-    };
+    };*/
 
         @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

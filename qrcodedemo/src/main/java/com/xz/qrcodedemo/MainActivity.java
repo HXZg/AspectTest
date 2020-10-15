@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
@@ -30,7 +31,10 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        new FragmentPagerAdapter()
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
 
             try {
@@ -158,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 //                Test test = new Test();
 //                test.setCall(call);
 //                test.getData();
-                /*new Thread(new Runnable() {
+                *//*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -178,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                }).start();*/
+                }).start();*//*
 
 //                startService(new Intent(MainActivity.this,MyService.class));
                 Log.i("zzzzzzzzzz","on create service" + Thread.currentThread().getId() + "::" + Process.myPid());
@@ -193,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onServiceDisconnected(ComponentName name) {
-                        /*try {
+                        *//*try {
                             URL url = new URL("");
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                             urlConnection.setRequestMethod("POST");
@@ -211,12 +215,27 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }*/
+                        }*//*
                     }
                 }, Context.BIND_AUTO_CREATE);
                 // 1s back finish
             }
         });
+
+
+        WebView webView = new WebView(this);
+        webView.loadUrl("https://www.baidu.com");  // h5*/
+
+
+        // Window Activity ViewGroup View  L行 U行
+//        MainViewModel viewModel;
+
+        /*viewModel.liveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                //s;
+            }
+        });*/
 
 //        Message message = handler.obtainMessage(0, 30, 0);
 //        handler.sendMessage(message);
@@ -283,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
 //                .initiateScan(); // `this` is the current Activity
 
 
-        Person._Person person = Person._Person.newBuilder().setName("").setAccount("").setPassword("").build();
+        /*Person._Person person = Person._Person.newBuilder().setName("").setAccount("").setPassword("").build();
 
         byte[] bytes = person.toByteArray();
 
@@ -293,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
             Person._Person person1 = Person._Person.parseFrom(bytes);
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
