@@ -20,7 +20,6 @@ public class MainViewModel extends ViewModel {
 
     public MainModel getModel() {
 //        String s = model.getInfo();
-        liveData.setValue("");
         return model;
     }
 }

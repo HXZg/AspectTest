@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/aspectlib" />
             <option value="$PROJECT_DIR$/coroutinestest" />
+            <option value="$PROJECT_DIR$/hilttest" />
             <option value="$PROJECT_DIR$/mmapfile" />
             <option value="$PROJECT_DIR$/navtest" />
             <option value="$PROJECT_DIR$/plugintest" />

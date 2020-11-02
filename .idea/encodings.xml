@@ -4,6 +4,9 @@
     <file url="file://$PROJECT_DIR$/ArrayListLib/src/main/java/com/example/arraylistlib/JavaAnimal.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/annotation_compile/src/main/java/com/xz/lib/Destination.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/annotation_compile/src/main/java/com/xz/lib/NavigationProcessor.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/build.gradle" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mmapfile/build.gradle" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/navtest/src/main/java/com/xz/navtest/utils/CustomDestination.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/settings.gradle" charset="GBK" />
   </component>
 </project>
