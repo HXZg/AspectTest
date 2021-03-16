@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/AFragment"
+        android:icon="@mipmap/ic_launcher"
+        android:title="A"/>
+    <item android:id="@+id/BFragment"
+        android:icon="@mipmap/ic_launcher"
+        android:title="B"/>
+    <item android:id="@+id/CFragment"
+        android:icon="@mipmap/ic_launcher"
+        android:title="C"/>
+    <item android:id="@+id/DFragment"
+        android:icon="@mipmap/ic_launcher"
+        android:title="D"/>
+    <item android:id="@+id/EFragment"
+        android:icon="@mipmap/ic_launcher"
+        android:title="E"/>
+</menu>

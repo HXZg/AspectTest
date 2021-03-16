@@ -1,0 +1,8 @@
+syntax = "proto3";
+package com.xz.proto;
+option java_outer_classname = "Person";
+message _Person{
+  string name = 1;
+  string account = 2;
+  string password = 3;
+}
